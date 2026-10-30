@@ -1,0 +1,69 @@
+@Web_HostAddress = http://localhost:5250
+
+### 1. Yeni Classroom yarat
+POST {{Web_HostAddress}}/api/classroom
+Content-Type: application/json
+
+{
+  "name": "10A"
+}
+
+### 2. Həmin Classroom-a aid Student yarat
+POST {{Web_HostAddress}}/api/student
+Content-Type: application/json
+
+{
+  "fullName": "Əli Məmmədov",
+  "age": 16,
+  "classroomId": 1
+}
+
+### 3a. Birinci Course
+POST {{Web_HostAddress}}/api/course
+Content-Type: application/json
+
+{
+  "name": "Riyaziyyat"
+}
+
+### 3b. İkinci Course
+POST {{Web_HostAddress}}/api/course
+Content-Type: application/json
+
+{
+  "name": "Fizika"
+}
+
+### 4a. Student-i birinci Course-a əlavə et
+POST {{Web_HostAddress}}/api/studentcourse
+Content-Type: application/json
+
+{
+  "studentId": 1,
+  "courseId": 1
+}
+
+### 4b. Student-i ikinci Course-a əlavə et
+POST {{Web_HostAddress}}/api/studentcourse
+Content-Type: application/json
+
+{
+  "studentId": 1,
+  "courseId": 2
+}
+
+### 5. Student-in kurslarını gətir
+GET {{Web_HostAddress}}/api/studentcourse/1
+Accept: application/json
+
+### 6a. Bütün Student-ləri gətir
+GET {{Web_HostAddress}}/api/student
+Accept: application/json
+
+### 6b. Bütün Classroom-ları gətir
+GET {{Web_HostAddress}}/api/classroom
+Accept: application/json
+
+### 6c. Bütün Course-ları gətir
+GET {{Web_HostAddress}}/api/course
+Accept: application/json
