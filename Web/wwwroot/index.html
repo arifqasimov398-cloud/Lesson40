@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#101827">
+    <meta name="description" content="School Management - məktəb, sinif, tələbə və kurs idarəetmə sistemi.">
+    <title>EduCore | School Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/site.css">
+    <script src="/js/app.js" defer></script>
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar" id="sidebar">
+            <a class="brand" href="#dashboard" aria-label="EduCore ana səhifə">
+                <span class="brand-mark">E</span>
+                <span><strong>EduCore</strong><small>MANAGEMENT</small></span>
+            </a>
+            <div class="side-label">İŞ SAHƏSİ</div>
+            <nav class="navigation" aria-label="Əsas menyu">
+                <a class="nav-link active" href="#dashboard" data-page="dashboard"><span class="nav-icon">⌂</span> İcmal</a>
+                <a class="nav-link" href="#students" data-page="students"><span class="nav-icon">♙</span> Tələbələr</a>
+                <a class="nav-link" href="#classrooms" data-page="classrooms"><span class="nav-icon">▦</span> Siniflər</a>
+                <a class="nav-link" href="#courses" data-page="courses"><span class="nav-icon">▤</span> Kurslar</a>
+                <a class="nav-link" href="#enrollments" data-page="enrollments"><span class="nav-icon">⇄</span> Kurs qeydiyyatı</a>
+            </nav>
+            <div class="sidebar-bottom">
+                <div class="sidebar-note"><span class="status-dot"></span><span><strong>Sistem aktivdir</strong><small>API bağlantısı yoxlanılır</small></span></div>
+                <div class="sidebar-footer">EduCore · School Management</div>
+            </div>
+        </aside>
+
+        <main class="main-area">
+            <header class="topbar">
+                <button class="mobile-menu" id="mobileMenu" aria-label="Menyunu aç">☰</button>
+                <div class="breadcrumb">İdarəetmə paneli <span>/</span> <strong id="breadcrumbCurrent">İcmal</strong></div>
+                <div class="topbar-right"><span class="today-label" id="todayLabel"></span><span class="avatar">EC</span></div>
+            </header>
+
+            <section class="page-content">
+                <div class="page-heading">
+                    <div><p class="eyebrow">SCHOOL MANAGEMENT SYSTEM</p><h1 id="pageTitle">İcmal</h1><p class="page-subtitle" id="pageSubtitle">Məktəbin əsas göstəricilərinə ümumi baxış.</p></div>
+                    <button class="button button-primary" id="quickAddStudent">＋ Yeni tələbə</button>
+                </div>
+
+                <div class="connection-banner" id="connectionBanner"><span class="status-dot"></span><span id="connectionText">Server bağlantısı yoxlanılır...</span><button id="refreshButton" class="text-button">Yenilə ↻</button></div>
+
+                <section class="page-section" id="dashboardPage">
+                    <div class="stats-grid">
+                        <article class="stat-card"><div class="stat-top"><span class="stat-label">Ümumi tələbə</span><span class="stat-icon icon-violet">♙</span></div><strong class="stat-value" id="statStudents">—</strong><span class="stat-caption">Qeydiyyatda olan tələbələr</span></article>
+                        <article class="stat-card"><div class="stat-top"><span class="stat-label">Siniflər</span><span class="stat-icon icon-blue">▦</span></div><strong class="stat-value" id="statClassrooms">—</strong><span class="stat-caption">Yaradılmış siniflər</span></article>
+                        <article class="stat-card"><div class="stat-top"><span class="stat-label">Kurslar</span><span class="stat-icon icon-green">▤</span></div><strong class="stat-value" id="statCourses">—</strong><span class="stat-caption">Tədris olunan kurslar</span></article>
+                        <article class="stat-card"><div class="stat-top"><span class="stat-label">Kurs yazılışları</span><span class="stat-icon icon-orange">⇄</span></div><strong class="stat-value" id="statEnrollments">—</strong><span class="stat-caption">Tələbə-kurs əlaqələri</span></article>
+                    </div>
+                    <div class="dashboard-grid">
+                        <article class="panel">
+                            <div class="panel-heading"><div><h2>Son tələbələr</h2><p>Sistemə əlavə edilən tələbələr</p></div><a href="#students" class="inline-link">Hamısına bax →</a></div>
+                            <div class="table-wrap"><table><thead><tr><th>TƏLƏBƏ</th><th>SİNİF</th><th>YAŞ</th></tr></thead><tbody id="recentStudents"><tr><td colspan="3" class="empty-cell">Məlumat yüklənir...</td></tr></tbody></table></div>
+                        </article>
+                        <article class="panel">
+                            <div class="panel-heading"><div><h2>Siniflər</h2><p>Mövcud sinif siyahısı</p></div><a href="#classrooms" class="inline-link">Hamısına bax →</a></div>
+                            <div class="classroom-list" id="dashboardClassrooms"><div class="empty-state compact">Məlumat yüklənir...</div></div>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="page-section hidden" id="studentsPage">
+                    <div class="section-toolbar"><div class="search-box"><span>⌕</span><input id="studentSearch" type="search" placeholder="Ad və ya sinif üzrə axtar..." aria-label="Tələbə axtar"></div><button class="button button-primary" id="addStudentButton">＋ Tələbə əlavə et</button></div>
+                    <article class="panel"><div class="panel-heading"><div><h2>Tələbə siyahısı</h2><p id="studentCountLabel">Bütün tələbələr</p></div></div><div class="table-wrap"><table><thead><tr><th>ID</th><th>TƏLƏBƏNİN ADI</th><th>YAŞ</th><th>SİNİF</th></tr></thead><tbody id="studentsTable"></tbody></table></div></article>
+                </section>
+
+                <section class="page-section hidden" id="classroomsPage">
+                    <div class="section-toolbar"><div class="section-intro">Məktəbdəki sinifləri yaradın və siyahıya baxın.</div><button class="button button-primary" id="addClassroomButton">＋ Sinif yarat</button></div>
+                    <div class="entity-grid" id="classroomsGrid"></div>
+                </section>
+
+                <section class="page-section hidden" id="coursesPage">
+                    <div class="section-toolbar"><div class="section-intro">Tədris olunan kursları idarə edin.</div><button class="button button-primary" id="addCourseButton">＋ Kurs əlavə et</button></div>
+                    <div class="entity-grid" id="coursesGrid"></div>
+                </section>
+
+                <section class="page-section hidden" id="enrollmentsPage">
+                    <div class="section-toolbar"><div class="section-intro">Tələbələri mövcud kurslara əlavə edin.</div><button class="button button-primary" id="addEnrollmentButton">＋ Kursa yaz</button></div>
+                    <article class="panel"><div class="panel-heading"><div><h2>Tələbə və kurs əlaqələri</h2><p>Tələbənin seçilmiş kursları</p></div></div><div class="table-wrap"><table><thead><tr><th>TƏLƏBƏ</th><th>SİNİF</th><th>KURS</th></tr></thead><tbody id="enrollmentsTable"></tbody></table></div></article>
+                </section>
+            </section>
+            <footer class="main-footer"><span>© <span id="yearLabel"></span> EduCore Management</span><span>School administration made clear.</span></footer>
+        </main>
+    </div>
+
+    <div class="modal-backdrop hidden" id="modalBackdrop" role="presentation">
+        <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+            <div class="modal-heading"><div><p class="eyebrow">EDUCORE FORM</p><h2 id="modalTitle">Yeni qeyd</h2></div><button class="modal-close" id="modalClose" aria-label="Bağla">×</button></div>
+            <form id="modalForm"><div id="modalFields" class="form-fields"></div><p class="form-error hidden" id="formError" role="alert"></p><div class="modal-actions"><button type="button" class="button button-secondary" id="cancelModal">Ləğv et</button><button type="submit" class="button button-primary" id="submitModal">Yadda saxla</button></div></form>
+        </section>
+    </div>
+    <div class="toast-region" id="toastRegion" aria-live="polite"></div>
+</body>
+</html>
